@@ -22,16 +22,17 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
 use App\Filament\Admin\Resources\MataKuliahResource;
 use Filament\Forms\Components\Hidden;
+use Filament\Tables\Actions\Action;
 
 class KelasPage extends Page implements HasTable, HasForms, HasActions
 {
     use InteractsWithTable, InteractsWithForms, InteractsWithActions;
 
-    public $matkulId;
+    public $matkul;
 
     public function mount(): void
     {
-        $this->matkulId = MataKuliah::whereSlug(request()->route('matkul'))->first()->id;
+        $this->matkul = MataKuliah::whereSlug(request()->route('matkul'))->first();
     }
 
     protected static string $resource = MataKuliahResource::class;
@@ -41,7 +42,7 @@ class KelasPage extends Page implements HasTable, HasForms, HasActions
     public function table(Table $table): Table
     {
         return $table
-            ->query(MataKuliahKelas::query()->whereMataKuliahId($this->matkulId))
+            ->query(MataKuliahKelas::query()->whereMataKuliahId($this->matkul->id))
             ->columns([
                 TextColumn::make('kelas')
                     ->label('Kelas')
@@ -49,11 +50,16 @@ class KelasPage extends Page implements HasTable, HasForms, HasActions
                     ->sortable(),
             ])
             ->actions([
+                Action::make('kelas-detail')
+                    ->label('Atur Detail')
+                    ->icon('heroicon-o-academic-cap')
+                    ->color('info')
+                    ->url(fn(MataKuliahKelas $kelas) => KelasDetailPage::getUrl(['matkul' => $this->matkul->slug, 'kelas' => $kelas->kelas])),
                 EditAction::make()
                     ->form([
                         Section::make([
                             Hidden::make('mata_kuliah_id')
-                                ->default($this->matkulId),
+                                ->default($this->matkul->id),
                             TextInput::make('kelas')
                                 ->label('Kelas')
                                 ->required(),
@@ -75,7 +81,7 @@ class KelasPage extends Page implements HasTable, HasForms, HasActions
             ->form([
                 Section::make([
                     Hidden::make('mata_kuliah_id')
-                        ->default($this->matkulId),
+                        ->default($this->matkul->id),
                     TextInput::make('kelas')
                         ->label('Kelas')
                         ->required(),
