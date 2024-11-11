@@ -25,12 +25,15 @@ use Filament\Forms\Components\Select;
 class AsistenComponent extends Component implements HasTable, HasForms, HasActions
 {
     use InteractsWithTable, InteractsWithForms, InteractsWithActions;
+    
+    public $matkulKelas;
 
-    public $kelas;
-
-    public function mount($kelas)
+    public function mount($matkul, $kelas)
     {
-        $this->kelas = MataKuliahKelas::where('kelas', $kelas)->first();
+        $this->matkulKelas = MataKuliahKelas::whereKelas($kelas)->whereHas('mataKuliah', function($query) use ($matkul)
+        {
+            $query->whereSlug($matkul);
+        })->first();
     }
 
     public function render()
@@ -41,10 +44,7 @@ class AsistenComponent extends Component implements HasTable, HasForms, HasActio
     public function table(Table $table): Table
     {
         return $table
-            ->query(MataKuliahKelasAsprak::query()->with('asprak')->whereHas('mataKuliahKelas', function($query)
-            {
-                $query->where('kelas', $this->kelas->kelas);
-            }))
+            ->query(MataKuliahKelasAsprak::query()->with('asprak')->whereMataKuliahKelasId($this->matkulKelas->id))
             ->columns([
                 TextColumn::make('asprak.name')
                     ->label('Nama Asisten')
@@ -71,7 +71,7 @@ class AsistenComponent extends Component implements HasTable, HasForms, HasActio
             ->form([
                 Section::make([
                     Hidden::make('mata_kuliah_kelas_id')
-                        ->default($this->kelas->id),
+                        ->default($this->matkulKelas->id),
                     Select::make('asprak_id')
                         ->label('Asisten')
                         ->options(User::whereHas('roles', function($query)
