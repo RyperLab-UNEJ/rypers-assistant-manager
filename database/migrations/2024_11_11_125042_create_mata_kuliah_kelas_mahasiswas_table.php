@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('mahasiswa_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->unique(['mata_kuliah_kelas_id', 'mahasiswa_id']);
+            $table->unique(['mata_kuliah_kelas_id', 'mahasiswa_id'], 'mata_kuliah_kelas_mahasiswa_unique');
         });
     }
 
