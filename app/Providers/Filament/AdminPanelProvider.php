@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Resources\AsprakResource;
 use App\Filament\Admin\Resources\MataKuliahResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -105,6 +106,7 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('Master Data')
                         ->items([
                             ...MataKuliahResource::getNavigationItems(),
+                            ...AsprakResource::getNavigationItems(),
                             // ...PageResource::getNavigationItems(),
                             // ...CategoryResource::getNavigationItems(),
                             // ...HomePageSettings::getNavigationItems(),
