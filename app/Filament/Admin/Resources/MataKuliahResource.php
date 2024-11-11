@@ -62,6 +62,11 @@ class MataKuliahResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('aturKelas')
+                    ->label('Atur Kelas')
+                    ->icon('heroicon-o-academic-cap')
+                    ->color('info')
+                    ->url(fn(MataKuliah $mataKuliah) => Pages\KelasPage::getUrl(['matkul' => $mataKuliah])),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -85,6 +90,7 @@ class MataKuliahResource extends Resource
             'index' => Pages\ListMataKuliahs::route('/'),
             'create' => Pages\CreateMataKuliah::route('/create'),
             'edit' => Pages\EditMataKuliah::route('/{record}/edit'),
+            'kelas' => Pages\KelasPage::route('/{matkul}/kelas'),
         ];
     }
 
