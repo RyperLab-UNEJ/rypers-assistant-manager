@@ -2,31 +2,34 @@
 
 namespace App\Providers\Filament;
 
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\MenuItem;
-use Filament\Navigation\NavigationBuilder;
-use Filament\Navigation\NavigationGroup;
-use Filament\Navigation\NavigationItem;
 use Filament\Pages;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
-use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Filament\PanelProvider;
+use Filament\Pages\Dashboard;
+use Filament\Navigation\MenuItem;
+use Filament\Support\Colors\Color;
+use Filament\Navigation\NavigationItem;
+use Filament\Navigation\NavigationGroup;
+use Filament\Http\Middleware\Authenticate;
+use Filament\Navigation\NavigationBuilder;
+use Illuminate\Session\Middleware\StartSession;
+use App\Filament\Admin\Resources\AsprakResource;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use App\Filament\Admin\Resources\MahasiswaResource;
+use App\Filament\Admin\Resources\MataKuliahResource;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use FilipFonal\FilamentLogManager\FilamentLogManager;
 use GeoSot\FilamentEnvEditor\FilamentEnvEditorPlugin;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -103,6 +106,9 @@ class AdminPanelProvider extends PanelProvider
                         ]),
                     NavigationGroup::make('Master Data')
                         ->items([
+                            ...MataKuliahResource::getNavigationItems(),
+                            ...AsprakResource::getNavigationItems(),
+                            ...MahasiswaResource::getNavigationItems(),
                             // ...PageResource::getNavigationItems(),
                             // ...CategoryResource::getNavigationItems(),
                             // ...HomePageSettings::getNavigationItems(),
@@ -125,6 +131,6 @@ class AdminPanelProvider extends PanelProvider
 
                 ]);
             })
-            ;
+            ->spa();
     }
 }
