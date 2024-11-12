@@ -12,4 +12,9 @@ class MataKuliahKelas extends Model
     {
         return $this->belongsTo(MataKuliah::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'kelas';
+    }
 }

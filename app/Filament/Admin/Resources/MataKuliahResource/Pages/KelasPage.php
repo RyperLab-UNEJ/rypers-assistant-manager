@@ -54,7 +54,7 @@ class KelasPage extends Page implements HasTable, HasForms, HasActions
                     ->label('Atur Detail')
                     ->icon('heroicon-o-academic-cap')
                     ->color('info')
-                    ->url(fn(MataKuliahKelas $kelas) => KelasDetailPage::getUrl(['matkul' => $this->matkul->slug, 'kelas' => $kelas->kelas])),
+                    ->url(fn(MataKuliahKelas $kelas) => KelasDetailPage::getUrl(['matkul' => $this->matkul->slug, 'kelas' => $kelas])),
                 EditAction::make()
                     ->form([
                         Section::make([
