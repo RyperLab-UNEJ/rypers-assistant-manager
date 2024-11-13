@@ -8,6 +8,7 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
+        './vendor/lara-zeus/accordion/resources/views/**/*.blade.php',
     ],
     theme: {
         extend: {

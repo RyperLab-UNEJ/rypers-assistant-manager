@@ -92,6 +92,8 @@ class MataKuliahResource extends Resource
             'edit' => Pages\EditMataKuliah::route('/{record}/edit'),
             'kelas' => Pages\KelasPage::route('/{matkul}'),
             'kelas.detail' => Pages\KelasDetailPage::route('/{matkul}/{kelas}'),
+            'kelas.detail.topik.create' => Pages\Topik\CreateTopikPage::route('/{matkul}/{kelas}/topik/create'),
+            'kelas.detail.topik.edit' => Pages\Topik\EditTopikPage::route('/{matkul}/{kelas}/topik/{topik}/edit'),
         ];
     }
 

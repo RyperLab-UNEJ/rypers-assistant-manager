@@ -16,6 +16,7 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use App\Filament\Admin\Resources\MataKuliahResource;
 use App\Livewire\Admin\Resources\MataKuliahResource\Pages\KelasDetailPage\Components\AsistenComponent;
 use App\Livewire\Admin\Resources\MataKuliahResource\Pages\KelasDetailPage\Components\MahasiswaComponent;
+use App\Livewire\Admin\Resources\MataKuliahResource\Pages\KelasDetailPage\Components\TopikComponent;
 
 class KelasDetailPage extends Page
 {
@@ -45,7 +46,7 @@ class KelasDetailPage extends Page
                     ->tabs([
                         Tabs\Tab::make('topik')->label('Topik')
                             ->schema([
-                                // Livewire::make(MateriComponent::class, ['kelasId' => $this->kelasId])
+                                Livewire::make(TopikComponent::class, ['matkul' => $this->matkul, 'kelas' => $this->kelas])
                             ]),
                         Tabs\Tab::make('asisten')->label('Asisten')
                             ->schema([
