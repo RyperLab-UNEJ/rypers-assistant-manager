@@ -93,30 +93,9 @@ class TopikComponent extends Component implements HasForms, HasActions, HasInfol
                                 Action::make('editTopik')
                                     ->label('Edit')
                                     ->icon('heroicon-m-pencil-square')
-                                    ->color('primary')
                                     ->url(fn(Action $action) => EditTopikPage::getUrl(['matkul' => $this->matkulKelas->mataKuliah->slug, 'kelas' => $this->matkulKelas->kelas, 'topik' => $action->getComponent()->getState()['id']])),
-                                Action::make('deleteTopik')
-                                    ->label('Delete')
-                                    ->icon('heroicon-o-trash')
-                                    ->color('danger')
-                                    ->requiresConfirmation()
-                                    ->action(function(Action $action)
-                                    {
-                                        MataKuliahKelasTopik::find($action->getComponent()->getState()['id'])->delete();
-                                        Notification::make()
-                                            ->title('Topik berhasil dihapus')
-                                            ->success()
-                                            ->send();
-                                    }),
                             ])
                     ])
             ]);
-    }
-
-    public function createTopikAction(): CreateAction
-    {
-        return CreateAction::make('createTopik')
-            ->label('Buat Topik')
-            ->url(CreateTopikPage::getUrl(['matkul' => $this->matkulKelas->mataKuliah->slug, 'kelas' => $this->matkulKelas->kelas]));
     }
 }
